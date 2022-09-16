@@ -1,0 +1,18 @@
+FROM node:16.15-alpine3.14
+WORKDIR  /
+
+RUN apk add --no-cache bash postgresql-client
+
+COPY package.json .
+COPY package-lock.json .
+RUN npm ci
+
+
+COPY migrate.js .
+COPY main.js .
+COPY utils/ ./utils/
+COPY migrations/ ./migrations/
+COPY wait-for-pg-and-run.sh .
+RUN chmod 700 wait-for-pg-and-run.sh
+
+CMD ["./wait-for-pg-and-run.sh"]

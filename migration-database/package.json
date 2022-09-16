@@ -1,0 +1,23 @@
+{
+  "name": "migration_database",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "dev": "node -r dotenv/config main.js",
+    "run:dev": "ciEnv=dev ./pipelineMigration.sh"
+  },
+  "volta": {
+    "node": "14.19.3",
+    "npm": "8.5.5"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "pg": "^8.7.3",
+    "postgrator": "^7.1.0",
+    "tunnel-ssh": "^4.1.6"
+  }
+}
