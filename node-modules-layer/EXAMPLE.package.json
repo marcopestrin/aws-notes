@@ -1,0 +1,17 @@
+{
+  "name": "core-microservice",
+  "version": "12.1.14",
+  "dependencies": {
+    "aws-sdk": "^2.528.0",
+    "serverless-http": "^2.3.0",
+    "tar": "^6.1.11"
+  },
+  "devDependencies": {
+    "prettier": "^2.4.1",
+    "serverless": "^3.22.0",
+    "serverless-domain-manager": "^6.1.0",
+    "serverless-offline": "^9.2.6",
+    "serverless-offline-lambda": "^1.0.6",
+    "serverless-prune-plugin": "^2.0.1"
+  }
+}

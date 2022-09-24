@@ -1,0 +1,43 @@
+service: core-microservice
+custom:
+  myStage: ${opt:stage, "dev"}
+  myEnvironment: ${file(myEnvironment.yml)}
+  dynamodb:
+    stages:
+      - ${self:custom.myStage}
+    start:
+      migrate: true
+  prune:
+    automatic: true
+    number: 3
+  customDomain:
+    domainName: ${self:custom.myEnvironment.API_DOMAIN_NAME.${self:custom.myStage}}
+    basePath: cron
+    stage: ${self:provider.stage}
+layers:
+  modulesCore:
+    path: layer
+provider:
+  name: aws
+  profile: ${self:custom.myEnvironment.PROFILE.${self:custom.myStage}}
+  runtime: nodejs16.x
+  endpointType: EDGE
+  region: ${self:custom.myEnvironment.REGION.${self:custom.myStage}}
+  stage: ${self:custom.myStage}
+  memorySize: 256
+  layers:
+    - !Ref ModulesCoreLambdaLayer
+  environment:
+    PROFILE: ${self:custom.myEnvironment.PROFILE.${self:custom.myStage}}
+    API_DOMAIN_NAME: ${self:custom.myEnvironment.API_DOMAIN_NAME.${self:custom.myStage}}
+    REGION: ${self:custom.myEnvironment.REGION.${self:custom.myStage}}
+package:
+  exclude:
+    - "layer/**"
+    - "node_modules/**"
+
+plugins:
+  - serverless-offline-lambda
+  - serverless-offline
+  - serverless-prune-plugin
+  - serverless-domain-manager

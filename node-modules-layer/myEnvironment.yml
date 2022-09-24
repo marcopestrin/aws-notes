@@ -1,0 +1,18 @@
+PROFILE:
+  local: "dev"
+  dev: "dev"
+  tst: "tst"
+  prd: "prd"
+  stg: "stg"
+API_DOMAIN_NAME:
+  local: ""
+  dev: ""
+  tst: ""
+  prd: ""
+  stg: ""
+REGION:
+  local: ""
+  dev: ""
+  tst: ""
+  prd: ""
+  stg: ""
