@@ -1,10 +1,13 @@
 {
   "name": "core-microservice",
   "version": "12.1.14",
+  "scripts": {
+    "create-package:dev": "export AWS_PROFILE=dev && ./node_modules/.bin/sls package --package myArtifacts --stage dev",
+    "deploy-package:dev": "tar -czvf myArtifacts.tar.gz ./myArtifacts && export AWS_PROFILE=dev && ./node_modules/.bin/sls deploy --verbose --stage dev --package myArtifacts"
+  },
   "dependencies": {
     "aws-sdk": "^2.528.0",
-    "serverless-http": "^2.3.0",
-    "tar": "^6.1.11"
+    "serverless-http": "^2.3.0"
   },
   "devDependencies": {
     "prettier": "^2.4.1",

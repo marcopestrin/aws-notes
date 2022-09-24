@@ -13,6 +13,3 @@ rm -rf layer/nodejs/node_modules/aws-sdk \
   layer/nodejs/node_modules/rxjs \
   layer/nodejs/node_modules/@babel \
   layer/nodejs/node_modules/@hapi
-
-# install all modules included dev-dependencies
-npm ci
