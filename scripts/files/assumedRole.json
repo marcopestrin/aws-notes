@@ -1,0 +1,15 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "dynamodb:*",
+        "s3:*",
+        "secretsmanager:*",
+        "dbqms:*",
+        "rds-data:*"
+      ],
+      "Effect": "Allow"
+    }
+  ]
+}
