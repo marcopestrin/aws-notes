@@ -1,0 +1,35 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:CreateLogGroup"
+            ],
+            "Resource": [
+                "arn:aws:logs:_ENVIRONMENT_REGION_:_ENVIRONMENT_ACCOUNT_ID_:log-group:/aws/lambda/my-microservice-*:*"
+            ],
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "logs:PutLogEvents"
+            ],
+            "Resource": [
+                "arn:aws:logs:_ENVIRONMENT_REGION_:_ENVIRONMENT_ACCOUNT_ID_:log-group:/aws/lambda/my-microservice-*:*:*"
+            ],
+            "Effect": "Allow"
+        },
+        {
+            "Action": [
+                "lambda:InvokeFunction",
+                "lambda:InvokeAsync",
+                "dynamodb:*",
+                "rds-data:*",
+                "sqs:*"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        }
+    ]
+}

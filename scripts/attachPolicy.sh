@@ -1,14 +1,21 @@
 #!/bin/bash
+BASEDIR=$(dirname "$0")
+echo "$BASEDIR"
+source "$BASEDIR/../.migration"
 echo $AWS_PROFILE
 echo $AWS_DEFAULT_REGION
 
-role_name="my-microservice-role-${MIGRATION_ENV}"
-echo "Role name: ${role_name}"
-aws iam update-assume-role-policy --role-name $role_name --policy-document "file://$BASEDIR/files/assumedRole.json"
+role_name="my-microservice-lambda"
+policy_name="my-microservice-${MIGRATION_ENV}"
 
-policy_name="my-microservice-policy-${MIGRATION_ENV}"
-echo "Creating policy ${policy_name}"
-policy_arn=$(aws iam create-policy --policy-name $policy_name --policy-document "file://$BASEDIR/files/policy.json" | jq -r '.Policy.Arn')
-echo "Attaching create policy ${policy_arn}"
+echo "creating role ${role_name}"
+aws iam create-role --role-name $role_name --assume-role-policy-document "file://$BASEDIR/files/assumedRole.json"
 
-aws iam attach-role-policy --policy-arn $policy_arn --role-name $role_namek
+# Creating temporary file env
+cat files/policyTemplate.json | sed "s/_ENVIRONMENT_REGION_/$AWS_DEFAULT_REGION/g" | sed "s/_ENVIRONMENT_ACCOUNT_ID_/$ID_ACCOUNT/g" > policy-$MIGRATION_ENV.json
+
+echo "creating policy ${policy_name}"
+policy_arn=$(aws iam create-policy --policy-name $policy_name --policy-document "file://$BASEDIR/policy-$MIGRATION_ENV.json" | jq -r '.Policy.Arn')
+
+echo "attaching create policy ${policy_arn}"
+aws iam attach-role-policy --policy-arn $policy_arn --role-name $role_name
